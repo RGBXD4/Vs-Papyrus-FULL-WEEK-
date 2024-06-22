@@ -773,7 +773,7 @@ class CharacterEditorState extends MusicBeatState
 				updatePresence();
 			}
 			else if(sender == charNoteSkinInputText) {
-				if(!Paths.fileExists('images/note stuff/skin/' + charNoteSkinInputText.text + '.png', IMAGE,false,'shared')){
+				if(!Paths.fileExists('images/note stuff/skin/' + charNoteSkinInputText.text + '.png', IMAGE,'shared')){
 					char.skin = "";
 					cnsDescrip.text = "Char NoteSkin: NONE";
 				}
