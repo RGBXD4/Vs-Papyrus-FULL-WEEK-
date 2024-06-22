@@ -100,7 +100,7 @@ class PortraitThing extends MusicBeatState
 		else
 		{
 			explan = true;
-			if (Paths.fileExists('images/explaining/$song explain.png',IMAGE,false,'shared')){
+			if (Paths.fileExists('images/explaining/$song explain.png',IMAGE,'shared')){
 				bg = new FlxSprite().loadGraphic(Paths.image('explaining/$song explain'));
 				bg.screenCenter(X);
 		
@@ -1070,7 +1070,8 @@ class PlayState extends MusicBeatState
 				stageStorage["watch Front"].visible = false;
 
 			case 'bone brothers'| 'entry log':
-				battleBG = new FlxBackdrop(null, 1, 1, true, true);
+				battleBG = new FlxBackdrop();
+				battleBG.scale.set(1.0, 1.0);
 				battleBG.loadGraphic(Paths.image('Stage/grid'));
 				battleBG.active = false;
 				battleBG.visible = false;
