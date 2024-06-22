@@ -50,15 +50,7 @@ class Cache extends FlxState
         
         FlxG.mouse.visible = false;
 		FlxG.worldBounds.set(0, 0);
-        #if sys
-        for (i in FileSystem.readDirectory(FileSystem.absolutePath( "assets/shared/images/characters")))
-        {
-            if (!i.endsWith(".png"))
-                continue;
-
-            images.push(i);
-        }
-        #end
+     
         BG = new FlxSprite().loadGraphic(Paths.image('bg paps'));
 
 		text = new FlxText(FlxG.width / 2, FlxG.height / 2 - 10 ,0,"Loading...");
