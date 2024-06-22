@@ -1529,25 +1529,20 @@ class PlayState extends MusicBeatState
 		// cameras = [FlxG.cameras.list[1]];
 		startingSong = true;
 
-		// SONG SPECIFIC SCRIPTS
+	// SONG SPECIFIC SCRIPTS
 		#if LUA_ALLOWED
-		var filesPushed:Array<String> = [];
-		var foldersToCheck:Array<String> = [Paths.getPreloadPath('data/' + Paths.formatToSongPath(SONG.song) + '/')];
-
-		for (folder in foldersToCheck)
+		
+		var doPush:Bool = false;
+		var luaFile:String = 'data/' + Paths.formatToSongPath(SONG.song) + '/script.lua';
+		luaFile = Paths.getPreloadPath(luaFile);
+		if (OpenFlAssets.exists(luaFile))
 		{
-			if(FileSystem.exists(folder))
-			{
-				for (file in FileSystem.readDirectory(folder))
-				{
-					if(file.endsWith('.lua') && !filesPushed.contains(file))
-					{
-						luaArray.push(new FunkinLua(folder + file));
-						filesPushed.push(file);
-					}
-				}
-			}
+			doPush = true;
 		}
+
+		if (doPush)
+			luaArray.push(new FunkinLua(Asset2File.getPath(luaFile)));
+		
 		#end
 
 		failDial = new FlxTypeText(100,550,Std.int(FlxG.width * 0.9) - 100 ," ",28);
