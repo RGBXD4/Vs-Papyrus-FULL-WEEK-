@@ -47,7 +47,10 @@ class Main extends Sprite
 	}
 
 	static final losvideos:Array<String> = [
-		"",
+		"final",
+                "intro",
+		"troleo",
+                "sas burns water_1",
 	];
 
 	public function new()
