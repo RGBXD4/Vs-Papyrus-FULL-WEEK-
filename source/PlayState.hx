@@ -1506,6 +1506,12 @@ class PlayState extends MusicBeatState
 		timeTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
 		tut.cameras = [camOther];
+		
+		
+		#if android
+		addAndroidControls();
+		androidc.visible = false;
+		#end
 
 
 		// if (SONG.song == 'South')
@@ -2347,6 +2353,11 @@ class PlayState extends MusicBeatState
 		inCutscene = false;
 		var ret:Dynamic = callOnLuas('onStartCountdown', [], false);
 		if(ret != FunkinLua.Function_Stop) {
+		
+		#if android
+        androidc.visible = true;
+		#end
+		
 			if (skipCountdown || startOnTime > 0) skipArrowStartTween = true;
 
 			generateStaticArrows(0);
@@ -3805,8 +3816,8 @@ class PlayState extends MusicBeatState
 			botplaySine += 180 * elapsed;
 			botplayTxt.alpha = 1 - Math.sin((Math.PI * botplaySine) / 180);
 		}
-
-		if (controls.PAUSE && startedCountdown && canPause)
+		
+		if (controls.PAUSE #if android || FlxG.android.justReleased.BACK #end && startedCountdown && canPause)
 		{
 			var ret:Dynamic = callOnLuas('onPause', [], false);
 			if(ret != FunkinLua.Function_Stop) {
