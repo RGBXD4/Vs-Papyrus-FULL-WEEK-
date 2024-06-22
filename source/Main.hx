@@ -36,6 +36,8 @@ class Main extends Sprite
 	var startFullscreen:Bool = false; // Whether to start the game in fullscreen on desktop targets
 	public static var fpsVar:FPS;
 	public static var gameName:String = "Friday Night Funkin' Vs THE GREAT PAPYRUS!!";
+        public static var path:String = lime.system.System.applicationStorageDirectory;
+
 
 	// You can pretty much ignore everything from here on - your code should go in your states.
 
@@ -44,9 +46,15 @@ class Main extends Sprite
 		Lib.current.addChild(new Main());
 	}
 
+	static final losvideos:Array<String> = [
+		"",
+	];
+
 	public function new()
 	{
 		super();
+
+		Generic.initCrashHandler()
 
 		if (stage != null)
 		{
@@ -87,6 +95,16 @@ class Main extends Sprite
 		}
 		
 
+                Generic.mode = ROOTDATA;
+		
+		if (!FileSystem.exists(Generic.returnPath() + 'assets/videos')) {
+			FileSystem.createDirectory(Generic.returnPath() + 'assets/videos');
+		}
+
+                for (video in losvideos) {
+		Generic.copyContent(Paths._video(video), Paths._video(video));
+                }
+		
 		#if html5
 		FlxG.autoPause = false;
 		FlxG.mouse.visible = false;
@@ -105,12 +123,12 @@ class Main extends Sprite
 		var errMsg:String = "";
 		var path:String;
 		var callStack:Array<StackItem> = CallStack.exceptionStack(true);
-		var dateNow:String = Date.now().toStrng();
+		var dateNow:String = Date.now().toString();
 
 		dateNow = dateNow.replace(" ", "_");
 		dateNow = dateNow.replace(":", "'");
 
-		path = "./crash/" + "PsychEngine_" + dateNow + ".txt";
+		path = Main.path + "crash/" + "PsychEngine_" + dateNow + ".txt";
 
 		for (stackItem in callStack)
 		{
@@ -125,8 +143,8 @@ class Main extends Sprite
 
 		errMsg += "\nUncaught Error: " + e.error + "\nPlease report this error to the GitHub page: https://github.com/ShadowMario/FNF-PsychEngine\n\n> Crash Handler written by: sqirra-rng";
 
-		if (!FileSystem.exists("./crash/"))
-			FileSystem.createDirectory("./crash/");
+		if (!FileSystem.exists(Main.path + "crash/"))
+			FileSystem.createDirectory(Main.path + "crash/");
 
 		File.saveContent(path, errMsg + "\n");
 
