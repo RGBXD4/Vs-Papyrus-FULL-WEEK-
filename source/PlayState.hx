@@ -111,7 +111,20 @@ class PortraitThing extends MusicBeatState
 	}
 	override function update(elapsed:Float) 
 	{	
-		if (PlayerSettings.player1.controls.ACCEPT){
+	
+	#if android
+                var justTouched:Bool = false;
+
+		for (touch in FlxG.touches.list)
+		{
+			if (touch.justPressed)
+			{
+				justTouched = true;
+			}
+		}
+		#end
+		
+		if (PlayerSettings.player1.controls.ACCEPT #if android || justTouched #end){
 			if (explan){
 				trace('okay');
 				FlxG.sound.play(Paths.sound('undertale Save'));
