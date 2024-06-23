@@ -212,6 +212,7 @@ class DialogueBox extends FlxSpriteGroup
 		// add(dialogue);
 		if (ClientPrefs.languageType == "Espanol")
 			skip.text = "Presiona ESC para saltear el dialogo";
+
 	}
 	var ok:FlxTextFormat = new FlxTextFormat(0xFFF8FF00,false,false,0xFFF8FF00);
 	var markerBool:Bool = false;
@@ -271,7 +272,19 @@ class DialogueBox extends FlxSpriteGroup
 				});
 		}
 
-		if (PlayerSettings.player1.controls.ACCEPT && dialogueStarted == true)
+		#if android
+                var justTouched:Bool = false;
+
+		for (touch in FlxG.touches.list)
+		{
+			if (touch.justPressed)
+			{
+				justTouched = true;
+			}
+		}
+		#end
+
+		if (PlayerSettings.player1.controls.ACCEPT #if android || justTouched #end && dialogueStarted == true)
 		{
 			remove(dialogue);
 				
