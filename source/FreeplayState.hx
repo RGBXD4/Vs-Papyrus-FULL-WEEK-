@@ -282,7 +282,7 @@ class FreeplayState extends MusicBeatState
 		add(text);
 
 #if android
-		addVirtualPad(NONE, A_B);
+		addVirtualPad(FULL, A_B);
 		addPadCamera();
 		#end
 		
